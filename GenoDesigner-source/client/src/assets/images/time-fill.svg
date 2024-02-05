@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+         <g id="02首页" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(-1053.000000, -267.000000)" id="编组-5">
+            <g transform="translate(1053.000000, 267.000000)" id="time-fill">
+                <polygon id="路径" points="0 0 24 0 24 24 0 24"></polygon>
+                <path d="M12,22 C6.477,22 2,17.523 2,12 C2,6.477 6.477,2 12,2 C17.523,2 22,6.477 22,12 C22,17.523 17.523,22 12,22 Z M13,12 L13,7 L11,7 L11,14 L17,14 L17,12 L13,12 Z" id="形状" fill="#2F54EB" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>
