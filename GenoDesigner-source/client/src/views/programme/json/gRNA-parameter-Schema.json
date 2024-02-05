@@ -1,0 +1,244 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$ref": "#/definitions/Welcome",
+    "definitions": {
+        "Welcome": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "Genome": {
+                    "title": "Genome",
+                    "type": "string",
+                    "required":true
+                },
+                "Vector": {
+                    "title": "Vector",
+                    "type": "string",
+                    "required":true
+                },
+                "Configure": {
+                    "title": "Configure",
+                    "type": "string",
+                    "required":true
+                },
+                "Outdir": {
+                    "title": "Outdir",
+                    "type": "string",
+                    "default": "",
+                    "required":true
+                },
+                "Left_Flank": {
+                    "title": "Left_Flank",
+                    "type": "integer",
+                    "default": 2000,
+                    "required":true
+                },
+                "Right_Flank": {
+                    "title": "Right_Flank",
+                    "type": "integer",
+                    "default": 2000,
+                    "required":true
+                },
+                "Extend_Size": {
+                    "title": "Extend_Size",
+                    "type": "integer",
+                    "default": 100,
+                    "required":true
+                },
+                "min_len_of_primer": {
+                    "title": "min_len_of_primer",
+                    "type": "integer",
+                    "default": 18,
+                    "required":true
+                },
+                "max_len_of_primer": {
+                    "title": "max_len_of_primer",
+                    "type": "integer",
+                    "default": 30,
+                    "required":true
+                },
+                "option_len_of_primer": {
+                    "title": "option_len_of_primer",
+                    "type": "integer",
+                    "default": 26,
+                    "required":true
+                },
+                "min_gc_of_primer": {
+                    "title": "min_gc_of_primer",
+                    "type": "integer",
+                    "default": 0,
+                    "required":true
+                },
+                "max_gc_of_primer": {
+                    "title": "max_gc_of_primer",
+                    "type": "integer",
+                    "default": 100,
+                    "required":true
+                },
+                "option_gc_of_primer": {
+                    "title": "option_gc_of_primer",
+                    "type": "integer",
+                    "default": 50,
+                    "required":true
+                },
+                "min_tm_of_primer": {
+                    "title": "min_tm_of_primer",
+                    "type": "integer",
+                    "default": 37,
+                    "required":true
+                },
+                "max_tm_of_primer": {
+                    "title": "max_tm_of_primer",
+                    "type": "integer",
+                    "default": 90,
+                    "required":true
+                },
+                "option_tm_of_primer": {
+                    "title": "option_tm_of_primer",
+                    "type": "integer",
+                    "default": 65,
+                    "required":true
+                },
+                "max_diff_tm_of_paired_primer": {
+                    "title": "max_diff_tm_of_paired_primer",
+                    "type": "integer",
+                    "default": 5,
+                    "required":true
+                },
+                "picked_left_primer": {
+                    "title": "picked_left_primer",
+                    "type": "integer",
+                    "default": 1,
+                    "required":true
+                },
+                "picked_right_primer": {
+                    "title": "picked_right_primer",
+                    "type": "integer",
+                    "default": 1,
+                    "required":true
+                },
+                "the_start_of_left_primer": {
+                    "title": "the_start_of_left_primer",
+                    "type": "integer",
+                    "default": -1000000,
+                    "required":true
+                },
+                "the_start_of_right_primer": {
+                    "title": "the_start_of_right_primer",
+                    "type": "integer",
+                    "default": 1000000,
+                    "required":true
+                },
+                "the_window_size_of_primer": {
+                    "title": "the_window_size_of_primer",
+                    "type": "integer",
+                    "default": 40,
+                    "required":true
+                },
+                "the_len_of_overhang": {
+                    "title": "the_len_of_overhang",
+                    "type": "integer",
+                    "default": 20,
+                    "required":true
+                },
+                "the_max_number_of_primers": {
+                    "title": "the_max_number_of_primers",
+                    "type": "integer",
+                    "default": 2,
+                    "required":true
+                },
+                "primer_max_poly_x": {
+                    "title": "primer_max_poly_x",
+                    "type": "integer",
+                    "default": 3,
+                    "required":true
+                },
+                "Design_Type": {
+                    "title": "Design_Type",
+                    "type": "string",
+                    "default": "CRISPR",
+                    "enum": [
+                        "CRISPR",
+                        "CRISPRi"
+                    ],
+                    "required":true
+                },
+                "Model": {
+                    "title": "Model",
+                    "type": "string",
+                    "default": "Cas9",
+                    "enum": [
+                        "Cas9",
+                        "Cpf1"
+                    ],
+                    "required":true
+                },
+                "Score_gc": {
+                    "title": "Score_gc",
+                    "type": "boolean",
+                    "default": "True",
+                    "enum": [
+                        "True",
+                        "FaLse"
+                    ],
+                    "required":true
+                },
+                "ScoringMethod": {
+                    "title": "ScoringMethod",
+                    "type": "string",
+                    "default": "DOENCH_2016",
+                    "enum": [
+                        "G_20",
+                        "XU_2015",
+                        "DOENCH_2014",
+                        "DOENCH_2016",
+                        "MORENO_MATEOS_2015",
+                        "CHARI_2015",
+                        "KIM_2018",
+                        "ALKAN_2018",
+                        "ZHANG_2019",
+                        "ALL"
+                    ],
+                    "required":true
+                },
+                "Target_type": {
+                    "title": "Target_type",
+                    "type": "string",
+                    "default": "gene",
+                    "required":true
+                },
+                "Guid_size": {
+                    "title": "Guid_size",
+                    "type": "integer",
+                    "default": 20,
+                    "required":true
+                },
+                "PAM": {
+                    "title": "PAM",
+                    "type": "string",
+                    "default": "NGG",
+                    "required":true
+                },
+                "gRNA_num": {
+                    "title": "gRNA_num",
+                    "type": "integer",
+                    "default": 3,
+                    "required":true
+                },
+                "Max_offtargets": {
+                    "title": "Max_offtargets",
+                    "type": "integer",
+                    "default": 300,
+                    "required":true
+                },
+                "Max_mismatches": {
+                    "title": "Max_mismatches",
+                    "type": "integer",
+                    "default": 3,
+                    "required":true
+                }
+            },
+            "title": "Welcome"
+        }
+    }
+}
