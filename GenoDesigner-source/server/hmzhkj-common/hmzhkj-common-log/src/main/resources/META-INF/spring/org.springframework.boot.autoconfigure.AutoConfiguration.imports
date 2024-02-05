@@ -1,0 +1,2 @@
+com.hmzhkj.framework.service.AsyncLogService
+com.hmzhkj.framework.aspect.LogAspect

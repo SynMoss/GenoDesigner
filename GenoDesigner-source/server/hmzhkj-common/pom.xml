@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.hmzhkj</groupId>
+        <artifactId>installation-design</artifactId>
+        <version>3.6.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <modules>
+        <module>hmzhkj-common-log</module>
+        <module>hmzhkj-common-core</module>
+        <module>hmzhkj-common-redis</module>
+        <module>hmzhkj-common-swagger</module>
+        <module>hmzhkj-common-security</module>
+        <module>hmzhkj-common-datascope</module>
+		<module>hmzhkj-common-datasource</module>
+    </modules>
+
+    <artifactId>hmzhkj-common</artifactId>
+    <packaging>pom</packaging>
+
+    <description>
+	    hmzhkj-common-universal module
+    </description>
+
+</project>
