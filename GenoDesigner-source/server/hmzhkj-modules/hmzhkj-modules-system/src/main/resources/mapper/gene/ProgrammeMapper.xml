@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmzhkj.gene.mapper.ProgrammeMapper">
+    <select id="getLastViewProgramme" resultType="com.hmzhkj.gene.domain.Programme">
+        select * from programme where possess_staff = #{possessStaff} and viewed_time is not null
+        order by viewed_time desc limit 1
+    </select>
+    <select id="queryProgrammeList" resultType="com.hmzhkj.gene.domain.vo.ProgrammeVO">
+        SELECT
+        p.*,
+        pm.project_name
+        FROM
+        programme p LEFT JOIN design_t_b_project_main pm
+        on p.project_id = pm.id
+        where 1=1
+        <if test="programmeName != null  and programmeName != ''">
+            and p.programme_name like concat('%', replace(#{programmeName}::text, '_', '\_'), '%')
+        </if>
+        <if test="packState != null  and packState.size()>0">
+            and p.pack_state in
+            <foreach collection="packState" item="state" open="(" close=")" separator=",">
+                #{state}
+            </foreach>
+        </if>
+        <if test="projectName != null  and projectName != ''">
+            and pm.project_name like concat('%', replace(#{projectName}::text, '_', '\_'), '%')
+        </if>
+        <if test="projectId != null  and projectId != ''">
+            and p.project_id = #{projectId}
+        </if>
+        <if test="updateTimeStart != null  and updateTimeEnd != null">
+            and to_date(cast(p.update_time as TEXT),'YYYY-MM-DD HH24:MI:SS')
+            BETWEEN to_date(cast(#{updateTimeStart} as TEXT),'YYYY-MM-DD HH24:MI:SS')
+            AND to_date(cast(#{updateTimeEnd} as TEXT),'YYYY-MM-DD HH24:MI:SS')
+        </if>
+        <if test="possessStaff != null  and possessStaff != ''">
+            and p.possess_staff = #{possessStaff}
+        </if>
+        order by p.create_time desc
+    </select>
+
+    <select id="listNoProjectProgrammes" resultType="com.hmzhkj.gene.domain.vo.ProgrammeVO">
+        select p.id, p.project_id, p.programme_name, p.create_staff_name, pm.project_name
+        from programme p
+                 left join design_t_b_project_main pm
+                           on p.project_id = pm.id
+        where (p.project_id != #{projectId} or p.project_id is null)
+          and p.possess_staff = #{createStaffNo}
+    </select>
+</mapper>

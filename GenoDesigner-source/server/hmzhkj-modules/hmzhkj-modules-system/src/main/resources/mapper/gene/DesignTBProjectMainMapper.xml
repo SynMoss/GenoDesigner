@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmzhkj.gene.mapper.DesignTBProjectMainMapper">
+
+    <resultMap type="com.hmzhkj.gene.domain.DesignTBProjectMain" id="DesignTBProjectMainResult">
+        <result property="id"    column="id"    />
+        <result property="projectName"    column="project_name"    />
+        <result property="projectDescription"    column="project_description"    />
+        <result property="projectProgrammeNumber"    column="project_programme_number"    />
+        <result property="projectMemberNumber"    column="project_member_number"    />
+        <result property="projectIsDelete"    column="project_is_delete"    />
+        <result property="deleteReason"    column="delete_reason"    />
+        <result property="createTime"    column="create_time"   />
+        <result property="createStaffNo"    column="create_staff_no"    />
+        <result property="updateTime"    column="update_time"   />
+        <result property="updateStaffNo"    column="update_staff_no"    />
+        <result property="viewedTime"  column="viewed_time"/>
+        <result property="createStaffName"  column="create_staff_name"/>
+    </resultMap>
+
+    <sql id="selectDesignTBProjectMainVo">
+        select id, project_name, project_description, project_programme_number,
+               project_member_number, project_is_delete, delete_reason, create_time,
+               create_staff_no, update_time, update_staff_no, viewed_time, create_staff_name
+        from design_t_b_project_main
+    </sql>
+
+    <select id="selectDesignTBProjectMainList" resultMap="DesignTBProjectMainResult">
+        select distinct p.id, project_name, project_description, project_programme_number,
+        project_member_number, project_is_delete, delete_reason, p.create_time,
+        p.create_staff_no, p.update_time, p.update_staff_no, viewed_time, p.create_staff_name,
+        m.permission, m.status, coalesce(p1.num, 0) programmes, coalesce(p2.num, 0) members
+        from design_t_b_project_main p
+        left join design_t_b_project_members m on p.id = m.project_id
+        left join  (select project_id, count(1) num from programme group by project_id) p1 on p.id = p1.project_id
+        left join  (select project_id, count(1) num from design_t_b_project_members where status != 2 group by project_id) p2 on p.id = p2.project_id
+        where project_is_delete = 1
+        <if test="projectName != null  and projectName != ''"> and project_name like concat('%', replace(#{projectName}::text, '_', '\_'), '%')</if>
+        <if test="createStaffNoList != null  and createStaffNoList.size() > 0">
+            and p.create_staff_no in
+            <foreach collection="createStaffNoList" item="createStaffNo" open="(" close=")" separator=",">
+                #{createStaffNo}
+            </foreach>
+        </if>
+        and m.status != 2
+        and m.staff_id = #{loginStaffId}
+        and p.id in (
+        select project_id
+        from design_t_b_project_members
+        where status in (0,1)
+        <if test="loginStaffId !=null and loginStaffId !=''">
+            and staff_id = #{loginStaffId}
+        </if>
+        )
+        order by viewed_time desc, p.create_time desc
+    </select>
+
+    <select id="selectDesignTBProjectMainById"  resultMap="DesignTBProjectMainResult">
+        select id, project_name, project_description, project_programme_number,
+        project_member_number, project_is_delete, delete_reason, create_time,
+        create_staff_no, update_time, update_staff_no, viewed_time, create_staff_name
+        <if test="id != null  and id != ''">
+            , coalesce((select count(1) from programme where project_id = #{id}), 0) programmes
+            , coalesce((select count(1) from design_t_b_project_members where project_id = #{id} and status != 2) , 0) members
+        </if>
+        from design_t_b_project_main
+        where project_is_delete = 1
+        <if test="id != null  and id != ''"> and id = #{id}</if>
+    </select>
+
+    <update id="updateViewedById">
+        update design_t_b_project_main
+        set viewed_time = now()
+        where id = #{id}
+    </update>
+
+    <select id="selectProjectCreateStaffList" resultType="map">
+        select distinct create_staff_no value,create_staff_name label
+        from design_t_b_project_main
+        where project_is_delete = 1
+          and create_staff_no != ''
+          and id in (
+            select project_id
+            from design_t_b_project_members
+            where status in (0,1)
+          and staff_id = #{loginStaffId}
+            )
+    </select>
+
+    <select id="selectAllProject" resultType="com.hmzhkj.gene.domain.vo.ProjectVo">
+        select id, project_name projectName, create_staff_name createStaffName
+        from design_t_b_project_main
+        where project_is_delete = 1
+          and id in (
+            select project_id
+            from design_t_b_project_members
+            where status in (0,1)
+              and staff_id = #{loginStaffId}
+              and permission = '1'
+        )
+        order by create_time desc
+    </select>
+</mapper>

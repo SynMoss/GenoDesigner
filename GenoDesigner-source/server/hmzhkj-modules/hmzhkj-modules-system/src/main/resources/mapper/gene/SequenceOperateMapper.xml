@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmzhkj.gene.mapper.SequenceOperateMapper">
+    <resultMap type="com.hmzhkj.gene.domain.SequenceOperate" id="result">
+        <result property="id"    column="id"    />
+        <result property="start"    column="start"    />
+        <result property="end"    column="end"    />
+        <result property="sequenceId"    column="sequence_id"    />
+        <result property="type"    column="type"    />
+        <result property="preSequence"    column="pre_sequence"    />
+        <result property="sequence"    column="sequence"    />
+        <result property="isDel"    column="is_del"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createByName"    column="create_by_name"    />
+        <result property="canRollback"    column="can_rollback"    />
+    </resultMap>
+    <insert id="saveList">
+        insert into sequence_operate(sequence_id,"type","start","end",pre_sequence,"sequence",create_by,create_by_name,"order",can_rollback,source_path,err_excel_path) values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.sequenceId},#{item.type},#{item.start},#{item.end},#{item.preSequence},
+            #{item.sequence},#{item.createBy},#{item.createByName},#{item.order},#{item.canRollback},#{item.sourcePath},#{item.errExcelPath})
+        </foreach>
+    </insert>
+    <insert id="save" keyProperty="id" useGeneratedKeys="true" keyColumn="id">
+        insert into sequence_operate(sequence_id,"type","start","end",pre_sequence,"sequence",create_by,create_by_name,"order",can_rollback,source_path,err_excel_path) values
+            (#{sequenceId},#{type},#{start},#{end},#{preSequence},
+             #{sequence},#{createBy},#{createByName},#{order},#{canRollback},#{sourcePath},#{errExcelPath})
+    </insert>
+    <select id="countMaxOrder" resultType="int">
+        select max("order") from sequence_operate where sequence_id = #{sequenceId} and is_del = 0
+    </select>
+    <select id="list" resultMap="result">
+        select * from sequence_operate where sequence_id = #{sequenceId} and is_del = 0 order by id desc
+    </select>
+    <select id="getLatest" resultMap="result">
+        select * from sequence_operate where sequence_id = #{sequenceId} and is_del = 0 order by id desc limit 1;
+    </select>
+    <select id="listId" resultType="Long">
+        select id from sequence_operate where sequence_id = #{sequenceId} and id&gt;=#{id}
+    </select>
+    <select id="listRollback" resultMap="result">
+        select * from sequence_operate where sequence_id = #{sequenceId} and id &gt;= #{id}  and is_del = 0 order by id desc
+    </select>
+    <select id="getRollback" resultMap="result">
+        select * from sequence_operate where sequence_id = #{sequenceId} and id = #{id} and is_del = 0
+    </select>
+    <delete id="removeByIdList">
+        update sequence_operate set is_del = 1 where sequence_id = #{sequenceId} and id in
+        <foreach collection="list" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </delete>
+    <delete id="removeBySequenceIdList">
+        update sequence_operate set is_del = 1 where sequence_id in
+        <foreach collection="list" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </delete>
+</mapper>

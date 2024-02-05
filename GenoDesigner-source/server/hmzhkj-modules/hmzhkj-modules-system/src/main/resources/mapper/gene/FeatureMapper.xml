@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmzhkj.gene.mapper.FeatureMapper">
+    <resultMap type="com.hmzhkj.gene.domain.Feature" id="result">
+        <result property="id"    column="id"    />
+        <result property="start"    column="start"    />
+        <result property="end"    column="end"    />
+        <result property="sequenceId"    column="sequence_id"    />
+        <result property="type"    column="type"    />
+        <result property="strand"    column="strand"    />
+        <result property="name"    column="name"    />
+        <result property="source"    column="source"    />
+        <result property="sort"    column="sort"    />
+        <result property="isDel"    column="is_del"    />
+        <result property="arrowheadType"    column="arrowhead_type"    />
+        <result property="locations" column="locations" jdbcType="OTHER" typeHandler="com.hmzhkj.gene.model.LocationsTypeHandle"   />
+        <result property="notes" column="notes" jdbcType="OTHER"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"  />
+        <result property="history" column="history" jdbcType="OTHER"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"  />
+    </resultMap>
+    <insert id="saveList" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into feature(sequence_id,"type","start","end",strand,"name",arrowhead_type,locations,notes,"source",is_temporary,sort,history,operate_id) values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.sequenceId},#{item.type},#{item.start},#{item.end},#{item.strand},
+            #{item.name},#{item.arrowheadType},#{item.locations,jdbcType=OTHER, typeHandler=com.hmzhkj.gene.model.LocationsTypeHandle},
+            #{item.notes,jdbcType=OTHER, typeHandler=com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler},#{item.source},#{item.isTemporary},#{item.sort},
+            #{item.history,jdbcType=OTHER, typeHandler=com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler},#{item.operateId})
+        </foreach>
+    </insert>
+    <insert id="save" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into feature(sequence_id,"type","start","end",strand,"name",arrowhead_type,locations,notes,"source",is_temporary,sort,history,operate_id) values
+            (#{sequenceId},#{type},#{start},#{end},#{strand},
+            #{name},#{arrowheadType},#{locations,jdbcType=OTHER, typeHandler=com.hmzhkj.gene.model.LocationsTypeHandle},
+            #{notes,jdbcType=OTHER, typeHandler=com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler},#{source},#{isTemporary},#{sort},
+            #{history,jdbcType=OTHER, typeHandler=com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler},#{operateId})
+    </insert>
+    <select id="list" resultMap="result">
+        select * from feature where sequence_id = #{sequenceId}
+        <if test="start != null">
+            and "start" &gt;= #{start}
+            and "start" &lt;= #{end}
+        </if>
+        <if test="name != null and name != ''">
+            and "name" ilike concat('%',#{name}::varchar,'%')
+        </if>
+        <if test="type != null">
+            and "type" = #{type}
+        </if>
+        <if test="typeList != null and !typeList.isEmpty()">
+            and "type" in
+            <foreach collection="typeList" item="item" separator="," open="(" close=")">
+                #{item}
+            </foreach>
+        </if>
+        and is_del = 0
+        and start &gt; -1
+        order by sort
+    </select>
+    <select id="getById" resultMap="result">
+        select * from feature where sequence_id = #{sequenceId} and id = #{id}
+    </select>
+    <select id="listBySequenceId" resultMap="result">
+        select * from feature where sequence_id = #{sequenceId} and is_del = 0
+    </select>
+    <select id="listType" resultType="String">
+        select type from feature where sequence_id = #{sequenceId} and is_del = 0 and start &gt; -1
+        group by type
+    </select>
+    <select id="listTypeByProgrammeId" resultType="String">
+        select type from feature where sequence_id in (select id from sequence where programme_id=#{programmeId}) and is_del = 0 and start &gt; -1
+        group by type
+    </select>
+    <select id="listSource" resultType="String">
+        select distinct source from feature where sequence_id = #{sequenceId} and source is not null and is_del = 0
+    </select>
+    <delete id="removeBySequenceIdList">
+        delete from feature where sequence_id in
+        <foreach collection="list" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+        <if test="isTemporary!=null">
+            and is_temporary = #{isTemporary}
+        </if>
+    </delete>
+    <update id="updateOperateIdDel">
+        update feature set is_del = 1,cut_operate_id=#{cutOperateId} where sequence_id = #{sequenceId} and is_del = 0
+    </update>
+    <delete id="removeByOperateId">
+        delete from feature where sequence_id = #{sequenceId} and operate_id &gt;= #{operateId}
+    </delete>
+    <update id="updateByOperateIdUnDel">
+        update feature set is_del = 0 where sequence_id = #{sequenceId} and cut_operate_id in
+        <foreach collection="cutOperateIdList" separator="," open="(" close=")" item="item">
+            #{item}
+        </foreach>
+    </update>
+    <select id="getMaxOperateId" resultType="Long">
+        SELECT max(operate_id) from feature where sequence_id = #{sequenceId};
+    </select>
+    <update id="updateDelById">
+        update feature set is_del = 1,cut_operate_id=#{cutOperateId} where sequence_id = #{sequenceId}
+        <choose>
+            <when test="idList!=null and !idList.isEmpty()">
+                and id in
+                <foreach collection="idList" item="item" separator="," open="(" close=")">
+                    #{item}
+                </foreach>
+            </when>
+            <otherwise>
+                and id = #{id}
+            </otherwise>
+        </choose>
+    </update>
+    <delete id="removeByIdList">
+        delete from feature where sequence_id = #{sequenceId}
+        and id in
+        <foreach collection="idList" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </delete>
+    <update id="update">
+        update feature
+        <set>
+            <if test="name != null and name !=''">
+                "name" = #{name},
+            </if>
+            <if test="strand != null">
+                "strand" = #{strand},
+            </if>
+            <if test="start != null">
+                "start" = #{start},
+            </if>
+            <if test="end != null">
+                "end" = #{end},
+            </if>
+            <if test="type != null">
+                "type" = #{type},
+            </if>
+            <if test="end != null">
+                "source" = #{source},
+            </if>
+            <if test="end != null">
+                "sort" = #{sort},
+            </if>
+            <if test="locations != null">
+                "locations" = #{locations,jdbcType=OTHER, typeHandler=com.hmzhkj.gene.model.LocationsTypeHandle},
+            </if>
+            <if test="history != null">
+                "history" = #{history,jdbcType=OTHER, typeHandler=com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler},
+            </if>
+            <if test="notes!=null">
+                notes = #{notes,jdbcType=OTHER, typeHandler=com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler}
+            </if>
+        </set>
+        where sequence_id = #{sequenceId}
+        and id = #{id}
+    </update>
+    <insert id="saveCloneList" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="java.util.List">
+        insert into feature(sequence_id,"type","start","end",strand,"name",arrowhead_type,locations,notes,"source",is_temporary,sort,history) values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.sequenceId},#{item.type},#{item.start},#{item.end},#{item.strand},
+            #{item.name},#{item.arrowheadType},#{item.locations,jdbcType=OTHER, typeHandler=com.hmzhkj.gene.model.LocationsTypeHandle},
+            #{item.notes,jdbcType=OTHER, typeHandler=com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler},#{item.source},
+            #{item.isTemporary},#{item.sort},#{item.history,jdbcType=OTHER, typeHandler=com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler})
+        </foreach>
+    </insert>
+    <select id="listRepeat" resultMap="result">
+            select max("id") id
+            <if test="groupByName != null and groupByName != ''">
+                ,"name"
+            </if>
+            <if test="groupByType != null and groupByType != ''">
+                ,"type"
+            </if>
+            <if test="groupByStart != null and groupByStart != ''">
+                ,"start"
+            </if>
+            <if test="groupByEnd != null and groupByEnd != ''">
+                ,"end"
+            </if>
+            <if test="groupBySource != null and groupBySource != ''">
+                ,"source"
+            </if>
+        from feature where sequence_id = #{sequenceId} and is_del = 0
+        <trim prefix="group by" suffixOverrides=",">
+            <if test="groupByName != null and groupByName != ''">
+                "name",
+            </if>
+            <if test="groupByType != null and groupByType != ''">
+                "type",
+            </if>
+            <if test="groupByStart != null and groupByStart != ''">
+                "start",
+            </if>
+            <if test="groupByEnd != null and groupByEnd != ''">
+                "end",
+            </if>
+            <if test="groupBySource != null and groupBySource != ''">
+                "source",
+            </if>
+        </trim>
+        having count(*)>1
+    </select>
+    <select id="getOneRemainId" resultType="Long">
+        select id from feature where sequence_id = #{sequenceId}
+        <if test="name != null and name != ''">
+            and "name" = #{name}
+        </if>
+        <if test="type != null and type != ''">
+            and "type" = #{type}
+        </if>
+        <if test="start != null and start != ''">
+            and "start" = #{start}
+        </if>
+        <if test="end != null and end != ''">
+            and "end" = #{end}
+        </if>
+        <if test="source != null and source != ''">
+            and "source" = #{source}
+        </if>
+        limit 1
+    </select>
+    <delete id="removeRepeat">
+        update feature set is_del = 1,cut_operate_id=#{cutOperateId} where sequence_id  = #{sequenceId}
+        <if test="name != null and name != ''">
+            and "name" = #{name}
+        </if>
+        <if test="type != null and type != ''">
+            and "type" = #{type}
+        </if>
+        <if test="start != null and start != ''">
+            and "start" = #{start}
+        </if>
+        <if test="end != null and end != ''">
+            and "end" = #{end}
+        </if>
+        <if test="source != null and source != ''">
+            and "source" = #{source}
+        </if>
+        and id != #{id}
+    </delete>
+    <delete id="removeByType">
+        delete from feature where sequence_id  = #{sequenceId}
+        and type in
+        <foreach collection="typeList" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </delete>
+</mapper>

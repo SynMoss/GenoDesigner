@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmzhkj.gene.mapper.PartMapper">
+
+    <select id="queryListPage" resultType="com.hmzhkj.gene.domain.Part">
+        select * from part where create_staff_no = #{createStaffNo}
+        <if test="codes != null and codes.size()>0">
+          and code in
+            <foreach collection="codes" item="item" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        <if test="name != null and name != ''">
+          and name like concat('%', #{name}::text, '%')
+        </if>
+    </select>
+</mapper>

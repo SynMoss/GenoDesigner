@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.hmzhkj.gene.mapper.TemplateMapper">
+    <select id="getTemplateList" parameterType="com.hmzhkj.gene.domain.GetTemplateListDto" resultType="com.hmzhkj.gene.domain.Template">
+        SELECT *
+        FROM "template"
+        where (creater = #{id}
+        or open_type= 1)
+        <if test="name != null  and name != ''">
+            and name like concat('%', #{name}::text, '%')
+        </if>
+        order by open_type
+    </select>
+</mapper>

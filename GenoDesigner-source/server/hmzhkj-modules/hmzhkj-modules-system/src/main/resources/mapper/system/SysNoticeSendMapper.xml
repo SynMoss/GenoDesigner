@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmzhkj.system.mapper.SysNoticeSendMapper">
+   <select id="listNoticeSelf" resultType="com.hmzhkj.system.domain.SysNoticeSend">
+       select ns.*,n.notice_title,n.notice_content,n.notice_type from sys_notice_send ns inner join sys_notice n on ns.notice_id = n.notice_id
+        where user_id = #{userId}
+        <if test="isRead !=null">
+            and is_read = #{isRead}
+        </if>
+        order by ns.create_time desc
+   </select>
+</mapper>

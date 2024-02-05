@@ -1,0 +1,100 @@
+# Spring
+server:
+  port: 7004
+spring:
+  servlet:
+    multipart:
+      max-file-size: 200MB
+      max-request-size: 200MB
+  autoconfigure:
+    exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          lowerCaseServiceId: false
+          enabled: false
+  redis:
+    database: 6
+    host: localhost
+    port: 6379
+    password: 123456
+  datasource:
+    druid:
+      stat-view-servlet:
+        enabled: false
+        loginUsername: admin
+        loginPassword: 12sadfad3456
+    dynamic:
+      druid:
+        initial-size: 2
+        min-idle: 2
+        maxActive: 10
+        maxWait: 60000
+        timeBetweenEvictionRunsMillis: 60000
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: SELECT 1
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        poolPreparedStatements: true
+        maxPoolPreparedStatementPerConnectionSize: 20
+        filters: stat,slf4j
+        connectionProperties: druid.stat.mergeSql\=true;druid.stat.slowSqlMillis\=5000
+      datasource:
+
+        master:
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://36.133.150.55:3308/gene-black-system?stringtype=unspecified&&connectTimeout=60&socketTimeout=60
+          username: postgres
+          password: Ab123456jyz
+
+mybatis-plus:
+  mapper-locations: classpath*:mapper/**/*.xml
+  global-config:
+
+    banner: false
+    db-config:
+      id-type: ASSIGN_ID
+
+      table-underline: true
+  configuration:
+
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+    call-setters-on-nulls: true
+logging:
+  level:
+    com.hmzhkj.gene.mapper: info
+    com.hmzhkj.system.mapper: info
+file:
+  domain: http://127.0.0.1:9300
+  path: D:/upload/common
+  prefix: /statics
+url:
+  hmzhkj-system: http://localhost:7004
+  hmzhkj-file: http://localhost:7006
+  algorithm-service: http://36.133.150.55:9876
+  hmzhkj-design: http://36.133.150.55:9205
+  py: http://localhost:5003
+path:
+  sequence: D:/upload/sequence
+  template: D:/upload/template
+pwd:
+  public: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDO5fzIVcfCVZCNvKI+LTu//6+OgbTRjctxhWXxDisdZNsyKx+0lbVnVwsl4ZwFZlTocMvkx065yZlepfnmffqyGOU36em+ZdK1neqGvcRiJistq/AF7pA2KASHS7Fg634mO6NHYkuepNeWzkcCVlGBR8vF+MUZmMc1CdzDJlnWJQIDAQAB
+  private: MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAM7l/MhVx8JVkI28oj4tO7//r46BtNGNy3GFZfEOKx1k2zIrH7SVtWdXCyXhnAVmVOhwy+THTrnJmV6l+eZ9+rIY5Tfp6b5l0rWd6oa9xGImKy2r8AXukDYoBIdLsWDrfiY7o0diS56k15bORwJWUYFHy8X4xRmYxzUJ3MMmWdYlAgMBAAECgYADJPOmh8c1aN99h/RfRYi27kfYvpfk52bEHubhtvloxPOf24/ryqqrG2OL+9XHLzrzHWO74luL70hpa9RUcG2y6DB3zHsXwrEmX5N0z3nBL36vQ1DDANHGd8gg8uFFIyC0UUYLqdyz63jdZyxY+1FdclVUbqPdggNlXOvkCALlMQJBAPrmKl5EHoUXHpx6EN35/7gjtPYheaUthwkSVnBWuRwdAUwA1RrCGDrRDuyEGlJziD51npF+C+5Fd0usOxeuqPMCQQDTGtCkm0gHkSnW0QDxoyVzM//oLZEFVHlCQzlWKEYJgi+8plFnUIVXUVupyxdk70EU9dQiUUvl569EjNEUFcqHAkEAgK+5H2x08vJuwvdg21m0rW+zC2MUD4KQdjivmSMCAsdluOPcacMPxmsf6nO/RHb5dH/DewBZgjai/28xR+5PvQJAA33iDZbz7gwcoQz78wM7z1gA15pJV8k56DqsbBxmbCnXGEu39PmD+xnBZmGRlX3PmcUnKRonIzpdz8h0fNyPaQJAbFj1BVH3a17cls6RgwdfFMookxbzD8WDf5Z73uoVoAY573dD/o5BuZ6xd0dVUq+pBhS3A8ufE79zzkYB6so+cg==
+sms:
+  secretId: AKIDPedKlvpSntiwwgANJzOVLtBCwPbWAWcR
+  secretKey: ZuznKbfT0HH1TeYBYeT1JK4YmkQpxpPi
+  smsSdkAppId: 1400619148
+  signName: Slicing system
+  templateId: 1735320
+mail:
+  content: 【Chromosome Synthesis Simplified Design Tool】 reminds you that the verification code you used for% s this time is:% s, and the verification code is valid for 10 minutes
+
+swagger:
+  title: System Module Interface Document
+  license: Powered By hmzhkj

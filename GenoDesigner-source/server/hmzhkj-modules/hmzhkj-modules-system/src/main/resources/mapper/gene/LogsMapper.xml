@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmzhkj.gene.mapper.LogsMapper">
+    
+    <resultMap type="com.hmzhkj.gene.domain.Logs" id="LogsResult">
+        <result property="id"    column="id"    />
+        <result property="relationId"    column="relation_id"    />
+        <result property="staffId"    column="staff_id"    />
+        <result property="operationType"    column="operation_type"    />
+        <result property="operationModule"    column="operation_module"    />
+        <result property="objectSource"    column="object_source"    />
+        <result property="objectId"    column="object_id"    />
+        <result property="operationState"    column="operation_state"    />
+        <result property="operationLog"    column="operation_log"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createStaffNo"    column="create_staff_no"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateStaffNo"    column="update_staff_no"    />
+        <result property="createStaffName"    column="create_staff_name"    />
+    </resultMap>
+
+    <sql id="selectLogsVo">
+        select id, relation_id, staff_id, operation_type, operation_module, object_source,
+            object_id, operation_state, operation_log, create_time, create_staff_no, create_staff_name,
+            update_time, update_staff_no
+        from logs
+    </sql>
+
+    <select id="selectLogsList" resultMap="LogsResult">
+        <include refid="selectLogsVo"/>
+        <where>  
+            <if test="relationId != null  and relationId != ''"> and relation_id = #{relationId}</if>
+        </where>
+        order by create_timeorder by create_time
+    </select>
+</mapper>

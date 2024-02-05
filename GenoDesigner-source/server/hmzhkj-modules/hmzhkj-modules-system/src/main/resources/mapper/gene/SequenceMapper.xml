@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmzhkj.gene.mapper.SequenceMapper">
+    <resultMap type="com.hmzhkj.gene.domain.Sequence" id="result">
+        <result property="id"    column="id"    />
+        <result property="gbDivision"    column="gb_division"    />
+        <result property="fileName"    column="file_name"    />
+        <result property="name"    column="name"    />
+        <result property="programmeId"    column="programme_id"    />
+        <result property="bpLength"    column="bp_length"    />
+        <result property="circular"    column="circular"    />
+        <result property="isDel"    column="is_del"    />
+        <result property="sequenceTypeFromLocus"    column="sequence_type_from_locus"    />
+        <result property="extraLines" column="extra_lines" jdbcType="OTHER"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+    </resultMap>
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        insert into sequence(circular,file_name,"name",programme_id,"date",gb_division,sequence_type_from_locus,bp_length,source_file_name,extra_lines,key_words)
+        values (#{circular},#{fileName},#{name},#{programmeId},#{date},#{gbDivision},#{sequenceTypeFromLocus},#{bpLength},#{sourceFileName},
+                #{extraLines,jdbcType=OTHER, typeHandler=com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler},#{keyWords})
+    </insert>
+    <insert id="saveList" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into sequence(circular,file_name,"name",programme_id,"date",gb_division,sequence_type_from_locus,bp_length,source_file_name,extra_lines,key_words) values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.circular},#{item.fileName},#{item.name},#{item.programmeId},#{item.date},#{item.gbDivision},#{item.sequenceTypeFromLocus},#{item.bpLength},
+            #{item.sourceFileName},#{item.extraLines,jdbcType=OTHER, typeHandler=com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler},#{item.keyWords})
+        </foreach>
+    </insert>
+
+    <select id="list" resultMap="result">
+        select * from sequence
+        where programme_id = #{programmeId}
+        and is_del = 0
+        <if test="name != null and name !=''">
+            and "name" = #{name}
+        </if>
+
+    </select>
+    <select id="listToDelSequence" resultMap="result">
+        select * from sequence where programme_id = #{programmeId} and is_del = 0 and source_file_name != #{sourceFileName}
+    </select>
+    <select id="get" resultMap="result">
+        select * from sequence
+        where id = #{id}
+          and is_del = 0
+    </select>
+    <select id="listById" resultMap="result">
+        select * from sequence a
+        where a.programme_id = (select programme_id from sequence b where b.id = #{id})
+          and is_del = 0
+    </select>
+    <delete id="removeByIdList">
+        update sequence set is_del = 1 where id in
+        <foreach collection="list" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </delete>
+    <update id="update">
+        update sequence set
+        <if test="bpLength != null">
+            bp_length = #{bpLength}
+        </if>
+        where id = #{id}
+    </update>
+    <update id="updateValid">
+        update sequence set is_valid = #{isValid}
+        where programme_id = #{programmeId} and source_file_name = #{sourceFileName}
+    </update>
+</mapper>

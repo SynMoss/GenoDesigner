@@ -1,0 +1,8 @@
+# Spring
+spring:
+  application:
+
+    name: hmzhkj-system
+  profiles:
+
+    active: dev
