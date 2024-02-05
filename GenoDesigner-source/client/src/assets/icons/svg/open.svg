@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>folder-open-line备份</title>
+    <g id="控件" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="folder-open-line备份">
+            <polygon id="路径" points="0 0 18 0 18 18 0 18"></polygon>
+            <path d="M2.25,15.75 C1.83578644,15.75 1.5,15.4142136 1.5,15 L1.5,3 C1.5,2.58578644 1.83578644,2.25 2.25,2.25 L7.8105,2.25 L9.3105,3.75 L15,3.75 C15.4142136,3.75 15.75,4.08578644 15.75,4.5 L15.75,6.75 L14.25,6.75 L14.25,5.25 L8.6895,5.25 L7.1895,3.75 L3,3.75 L3,12.7485 L4.125,8.25 L16.875,8.25 L15.1425,15.18225 C15.0589057,15.5159483 14.7590095,15.75 14.415,15.75 L2.25,15.75 L2.25,15.75 Z M14.9535,9.75 L5.2965,9.75 L4.1715,14.25 L13.8285,14.25 L14.9535,9.75 Z" id="形状" fill="#B1B1B1" fill-rule="nonzero"></path>
+        </g>
+    </g>
+</svg>
