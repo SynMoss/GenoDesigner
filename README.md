@@ -5,28 +5,38 @@ Genome design stands as the fundamental pillar of genome synthesis. While earlie
 
 # Requirements
 Linux server with 4+ core, 16 GB+ memory, and 500 GB+ hard drive.
+
 Docker version 20 or higher.
 
 # Installation
 ```
 wget
+
 cd GenoDesigner-1.0
+
 sudo bash init_and_start.sh
 ```
 Visit http://<IP_of_server>:3009/client/en/index.html through browser.
-Note: please make sure that port 3009 is available.
+
+**Note:** Please make sure that port 3009 is available.
 
 # Instruction
-The PDF files in the instruction directory contain detailed information on GenoDesigner.
-About-GenoDesigner.pdf contains the basic information and description of GenoDesigner.
-Example-GenoDesigner.pdf contains the workflow of designing SynMoss Chr16L using GenoDesigner.
-Help-GenoDesigner.pdf contains the instructions for every function in GenoDesigner.
+The PDF files in the **instruction** directory contain detailed information on GenoDesigner.
+
+**About-GenoDesigner.pdf** contains the basic information and description of GenoDesigner.
+
+**Example-GenoDesigner.pdf** contains the workflow of designing SynMoss Chr16L using GenoDesigner.
+
+**Help-GenoDesigner.pdf** contains the instructions for every function in GenoDesigner.
 
 # Example
-Files in the example directory are required for designing Chr16L of SynMoss.
-Pp.Chr16L.gb contains sequence and annotations of the left arm of _P. patens_ Chr16.
-Pp.Chr16L_PCRmark.txt contains information on PCRmarks designed for Chr16L.
-SynMoss.Chr16L.gbff is the example output file of the designed SynMoss Chr16L.
+Files in the **example** directory are required for designing Chr16L of SynMoss.
+
+**Pp.Chr16L.gb** contains sequence and annotations of the left arm of _P. patens_ Chr16.
+
+**Pp.Chr16L_PCRmark.txt** contains information on PCRmarks designed for Chr16L.
+
+**SynMoss.Chr16L.gbff** is the example output file of the designed SynMoss Chr16L.
 
 # Cite
 For any citation, please refer to: 
