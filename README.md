@@ -10,9 +10,9 @@ Docker version 20 or higher.
 
 # Installation
 ```
-wget https://github.com/SynMoss/GenoDesigner/archive/refs/tags/GenoDesigner-v1.0.tar.gz
+wget https://github.com/SynMoss/GenoDesigner/releases/download/GenoDesigner-v1.0/GenoDesigner-1.0.tar.gz
 
-tar -zxvf GenoDesigner-v1.0.tar.gz
+tar -zxvf GenoDesigner-1.0.tar.gz
 
 cd GenoDesigner-1.0
 
