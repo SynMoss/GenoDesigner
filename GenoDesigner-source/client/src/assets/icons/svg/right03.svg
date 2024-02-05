@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+         <g id="控件" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="right/00" transform="translate(-8.000000, -86.000000)">
+            <g id="history-line-(1)" transform="translate(8.000000, 86.000000)">
+                <polygon id="路径" points="0 0 18 0 18 18 0 18"></polygon>
+                <path d="M9,1.5 C13.14225,1.5 16.5,4.85775 16.5,9 C16.5,13.14225 13.14225,16.5 9,16.5 C4.85775,16.5 1.5,13.14225 1.5,9 L3,9 C3,12.3135 5.6865,15 9,15 C12.3135,15 15,12.3135 15,9 C15,5.6865 12.3135,3 9,3 C6.9375,3 5.118,4.04025 4.03875,5.625 L6,5.625 L6,7.125 L1.5,7.125 L1.5,2.625 L3,2.625 L3,4.5 C4.368,2.6775 6.54675,1.5 9,1.5 Z M9.75,5.25 L9.75,8.68875 L12.18225,11.121 L11.121,12.18225 L8.25,9.30975 L8.25,5.25 L9.75,5.25 Z" id="形状" fill="#A3A4B2" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>
