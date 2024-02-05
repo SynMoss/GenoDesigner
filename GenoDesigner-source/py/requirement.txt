@@ -1,0 +1,11 @@
+Flask
+Flask-APScheduler
+Flask-Migrate
+Flask-Login
+Flask_Reuploaded
+Flask-SQLAlchemy
+flask-marshmallow
+Bio
+BCBio.GFF
+openpyxl
+xlsxwriter
