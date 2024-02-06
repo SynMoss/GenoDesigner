@@ -44,4 +44,5 @@ Files in the **example** directory are required for designing Chr16L of SynMoss.
 
 # Cite
 For any citation, please refer to: 
+
 Wenfei Yu, Shuo Zhang, Shijun Zhao, Lian-ge Chen, Jianbin Yan, Qiao Zhao, Beixin Mo, Ying Wang, Yuling Jiao, Yixing Ma, Xiaoluo Huang, Wenfeng Qian, Junbiao Dai. “Design a synthetic Moss genome using GenoDesigner”. In submission. 
