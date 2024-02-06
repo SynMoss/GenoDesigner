@@ -1,7 +1,9 @@
 # GenoDesigner
 GenoDesigner: an open-source software for synthetic genome design.
 
-Genome design stands as the fundamental pillar of genome synthesis. While earlier work on virus and bacteria genome synthesis adhered to a few simple design rules. recent progress in larger genome synthesis demands more systematic modifications to the original genome, leading to a comprehensive design process. As genome size increases, its design complexity grows substantially. The design of SynMoss includes numerous modifications in _Physcomitrium patens_ genome, thus requiring fast and easy-to-use software to generate the synthetic sequences. Consequently, many design-related tasks were manually and painstakingly executed by front-line scientists, such as the inspection of a missing fragment in the synthetic chromosome. In pursuit of this objective, we have developed “GenoDesigner”, an intuitive online genome design tool. This tool empowers researchers to manipulate target DNA sequences in each genome or chromosome. With a user-friendly interface, GenoDesigner is adept at handling genome designs up to the gigabase level. We anticipate that the principles, experiences, and the GenoDesigner tool outlined here will serve as invaluable resources, not only expediting the synthesis of the P. patens genome but also facilitating related biological research. 
+Genome design is crucial for synthesizing genomes, with larger genomes necessitating a more systematic approach. The design of SynMoss involves numerous modifications to the Physcomitrium patens genome, requiring user-friendly software for generating synthetic sequences. To address this, we have developed GenoDesigner, an online tool that allows researchers to manipulate DNA sequences within genomes or chromosomes. GenoDesigner is adept at handling genome designs up to the gigabase level, providing valuable support for expediting the synthesis of the P. patens genome and advancing related biological research.
+
+The supplement Python and R scripts of GenoDesigner can be found at https://github.com/WenfeiY/P.patens_geno_design.
 
 # Requirements
 Linux server with 4+ core, 16 GB+ memory, and 500 GB+ hard drive.
